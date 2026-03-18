@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700&display=swap");
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 7 0.004 240;
+    --foreground: 88 0.015 85;
+    --card: 10 0.005 240;
+    --card-foreground: 88 0.015 85;
+    --popover: 10 0.005 240;
+    --popover-foreground: 88 0.015 85;
+    --primary: 62 0.15 240;
+    --primary-foreground: 7 0.004 240;
+    --secondary: 16 0.007 240;
+    --secondary-foreground: 88 0.015 85;
+    --muted: 16 0.006 240;
+    --muted-foreground: 50 0.009 270;
+    --accent: 62 0.15 240;
+    --accent-foreground: 7 0.004 240;
+    --destructive: 50 0.22 25;
+    --destructive-foreground: 88 0.015 85;
+    --border: 20 0.007 240;
+    --input: 20 0.007 240;
+    --ring: 62 0.15 240;
+    --radius: 2px;
+    --sidebar: 9 0.004 240;
+    --sidebar-foreground: 88 0.015 85;
+    --sidebar-primary: 62 0.15 240;
+    --sidebar-primary-foreground: 7 0.004 240;
+    --sidebar-accent: 16 0.006 240;
+    --sidebar-accent-foreground: 88 0.015 85;
+    --sidebar-border: 20 0.007 240;
+    --sidebar-ring: 62 0.15 240;
+    --chart-1: 62 0.15 240;
+    --chart-2: 70 0.11 200;
+    --chart-3: 55 0.13 260;
+    --chart-4: 68 0.09 220;
+    --chart-5: 58 0.14 250;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", -apple-system, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  ::selection {
+    background: oklch(62% 0.15 240 / 0.22);
+    color: oklch(90% 0.015 85);
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--muted-foreground));
+  }
+}
+
+@layer utilities {
+  .font-serif-display {
+    font-family: "Playfair Display", "Times New Roman", serif;
+  }
+
+  .font-mono-code {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+  }
+
+  .section-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .section-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .thread-line {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.73rem;
+    color: oklch(48% 0.1 240);
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .copy-btn {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .section-block:hover .copy-btn,
+  .copy-btn:focus {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE SOVEREIGNTY MANIFESTO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --black: #0d0d0d;
+    --white: #f5f2ed;
+    --steel: #1c1c1c;
+    --dim: #6b6560;
+    --rule: #c4bdb5;
+    --red: #9b1f1f;
+    --amber: #b5761a;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Libre Baskerville', Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 17px; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.8;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 7vw 9vw;
+    border-bottom: 2px solid var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::after {
+    content: 'SOVEREIGNTY';
+    position: absolute;
+    bottom: -2rem;
+    right: -1rem;
+    font-family: var(--mono);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 600;
+    color: rgba(0,0,0,0.04);
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .cover-top { align-self: start; }
+
+  .breadcrumb {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 5rem;
+  }
+
+  .breadcrumb em { color: var(--black); font-style: normal; }
+
+  .cover-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 9vw, 8rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-sub {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 4rem;
+    padding-left: 0.2rem;
+  }
+
+  .cover-thesis {
+    max-width: 30rem;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 3px solid var(--black);
+    padding-left: 1.5rem;
+    color: var(--steel);
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 3rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  /* ── BODY ── */
+  .body {
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 0 9vw;
+  }
+
+  /* ── SECTION BREAK ── */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 5rem 0 3rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-rule { flex: 1; height: 1px; background: var(--rule); }
+
+  /* ── PART HEADER ── */
+  .part-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .part-header h2 {
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+  }
+
+  .part-tagline {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  /* ── BODY TEXT ── */
+  p {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.3rem;
+    color: var(--black);
+  }
+
+  /* ── LABEL ── */
+  .label {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  /* ── STACK DIAGRAM ── */
+  .stack {
+    border: 1px solid var(--rule);
+    margin: 2.5rem 0;
+    overflow: hidden;
+  }
+
+  .stack-title {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .stack-layer {
+    display: grid;
+    grid-template-columns: 3rem 1fr 2fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stack-layer:last-child { border-bottom: none; }
+
+  .stack-layer-num {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stack-layer-name {
+    padding: 1rem 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.02);
+  }
+
+  .stack-layer-desc {
+    padding: 1rem 1.2rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+  }
+
+  .stack-layer.l0 .stack-layer-num { background: #1a3a5c; }
+  .stack-layer.l1 .stack-layer-num { background: #1a4a2a; }
+  .stack-layer.l2 .stack-layer-num { background: #5c3a1a; }
+
+  /* ── CAPTURE TABLE ── */
+  .capture-table {
+    border: 1px solid var(--rule);
+    margin: 2.5rem 0;
+    overflow: hidden;
+  }
+
+  .capture-table-title {
+    background: var(--red);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .capture-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .capture-row:last-child { border-bottom: none; }
+
+  .capture-row-header {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1fr;
+    background: rgba(0,0,0,0.04);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .capture-cell {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    border-right: 1px solid var(--rule);
+  }
+
+  .capture-cell:last-child { border-right: none; }
+
+  .capture-cell.header {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 400;
+  }
+
+  .capture-cell.layer-name {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .capture-cell.trap { color: #7a0000; }
+  .capture-cell.key { color: #1a4a1a; }
+
+  /* ── IMAGE SLOT ── */
+  .img-slot {
+    width: 100%;
+    margin: 3rem 0;
+    border: 1px dashed var(--rule);
+    background: rgba(196,189,181,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+  }
+
+  .img-slot-label {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.28em;
+    color: var(--dim);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 2;
+  }
+
+  /* ── VERDICT BOX ── */
+  .verdict {
+    border: 2px solid var(--black);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .verdict::before {
+    content: 'VERDICT';
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--white);
+    padding: 0 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .verdict p {
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  /* ── PRINCIPLE ── */
+  .principle {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.55;
+    padding: 1.2rem 0 1.2rem 1.5rem;
+    border-left: 2px solid var(--black);
+    margin: 1.5rem 0;
+    color: var(--steel);
+  }
+
+  /* ── FINAL PRINCIPLES ── */
+  .finals {
+    padding: 5rem 0;
+    border-top: 2px solid var(--black);
+  }
+
+  .finals-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 3rem;
+  }
+
+  .final-line {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── BYLINE ── */
+  .byline {
+    padding: 3rem 0 5rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+    text-transform: uppercase;
+    line-height: 2.2;
+  }
+
+  .byline strong {
+    display: block;
+    color: var(--black);
+    font-size: 0.65rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    html { font-size: 15px; }
+    .stack-layer, .capture-row, .capture-row-header { grid-template-columns: 2rem 1fr; }
+    .stack-layer-desc { display: none; }
+    .capture-cell:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-top">
+    <div class="breadcrumb">
+      The Trap (2026) → <em>The Sovereignty Manifesto (2026)</em>
+    </div>
+    <div class="cover-title">THE<br>SOVEREIGNTY<br>MANIFESTO</div>
+    <div class="cover-sub">Engineering the Exit from the Legacy Capture Stack</div>
+    <div class="cover-thesis">
+      The current global system is not a service.<br>
+      It is a Capture Stack.<br>
+      Freedom is no longer an ideology.<br>
+      It is a correct systemic configuration.
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <span>Q4 2026</span>
+    <span>A Technical Blueprint for Sovereign Autonomy</span>
+    <span>Layer by Layer</span>
+  </div>
+</header>
+
+<!-- BODY -->
+<main class="body">
+
+  <!-- PART I -->
+  <div class="section-break">
+    <span class="section-num">Part I</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="part-header">
+    <h2>The Blueprint<br>of Autonomy</h2>
+    <div class="part-tagline">The Sovereign Stack — Architecture from the bottom up</div>
+  </div>
+
+  <p>Sovereignty is not a declaration. It is a stack configuration. A sovereign system is one where no single external actor can unilaterally revoke your identity, interrupt your execution, deny your settlement, or rewrite your state. This requires control across three critical layers: physical trust, verification logic, and execution authority. Failure at any one layer collapses autonomy at all layers above it.</p>
+
+  <p>The system you are currently inside does not prohibit exit. It removes the conditions under which exit feels rational. The Capture Stack does not need walls. It needs convenience — and it has it. To engineer your own exit, you must understand both stacks: the one that holds you, and the one that frees you.</p>
+
+  <!-- IMAGE SLOT 1 -->
+  <div class="img-slot">
+    <div class="img-slot-label">[ Image I — to be placed here ]<br>The Sovereign Stack / Blueprint of Autonomy</div>
+  </div>
+
+  <div class="label">Layer 0 — Hardware Trust</div>
+  <p>Every digital system ultimately runs on physical hardware. If you do not control the hardware layer, every layer above it is rented, not owned. Legacy systems depend on cloud compute concentration — AWS, Google Cloud, Azure — where administrative access can terminate your operational existence without notice, without appeal, without due process. This is not a theoretical risk. It is the documented failure mode of every centralized service that has ever been seized, compelled, or commercially discontinued.</p>
+
+  <p>The sovereign alternative is hardware diversity and distributed attestation. <strong>DePIN</strong> — Decentralised Physical Infrastructure Networks — distributes compute, storage, and connectivity across nodes owned by their operators. Helium for wireless connectivity, Akash for compute, Filecoin for storage. These are not applications on someone else's infrastructure. They are parallel infrastructure whose kill-switch does not exist because there is no single operator to compel. On the Internet Computer Protocol, <strong>Chain Key Cryptography</strong> ensures that no single node holds a private key — threshold signatures require multi-node compromise, not a single facility seizure. Entropy is distributed. Control is not.</p>
+
+  <div class="label">Layer 1 — Consensus: Who Controls Truth</div>
+  <p>Legacy systems resolve uncertainty about state through institutional authority — clearing houses, central timestamp servers, settlement networks. A single authority defines final reality. This is efficient. It is also a single point of failure, a single point of manipulation, and a single point of compelled compliance.</p>
+
+  <p>Sovereign systems replace authority arbitration with mathematical consensus. Truth becomes a provable state transition, not an institutional declaration. <strong>Blockchain timestamps</strong> create proof of prior existence through a mechanism that cannot be retroactively corrupted: every subsequent block's hash depends on the previous block's hash, so a retroactive insertion invalidates the entire chain from that point forward. The Internet Computer's ATBFT adaptive consensus switches between leader mode (efficiency) and leaderless mode (resilience) based on network conditions — it does not require a trusted leader to exist. Consensus corruption requires majority economic capture. Institutional manipulation requires one phone call.</p>
+
+  <div class="label">Layer 2 — Execution: Where Rules Run</div>
+  <p>Legacy execution occurs inside bank processors, exchange engines, and payment middleware. ISO 20022 functions as a pre-execution compliance filter — before your transaction runs, it is evaluated against identity, jurisdiction, and behavioural criteria. Execution depends on institutional approval. The institution can deny, delay, or redirect.</p>
+
+  <p><strong>Canister smart contracts</strong> on the Internet Computer execute logic with mathematical finality. No administrator — not even their creator — can pause your code mid-calculation. The state is tamperproof because it can only be modified through messages executed on-chain. <strong>ZK-proof verifiers</strong> enable private transactions: the network confirms validity without learning the details. Your will becomes law. Not because someone granted it. Because the mathematics enforces it.</p>
+
+  <div class="stack">
+    <div class="stack-title">The Sovereign Stack — Layer Summary</div>
+    <div class="stack-layer l0">
+      <div class="stack-layer-num">0</div>
+      <div class="stack-layer-name">Hardware</div>
+      <div class="stack-layer-desc">DePIN nodes (Helium, Akash, Filecoin) + Chain Key threshold signatures. Physical control without central custody.</div>
+    </div>
+    <div class="stack-layer l1">
+      <div class="stack-layer-num">1</div>
+      <div class="stack-layer-name">Consensus</div>
+      <div class="stack-layer-desc">ATBFT adaptive consensus + blockchain timestamps. Mathematical truth without institutional authority.</div>
+    </div>
+    <div class="stack-layer l2">
+      <div class="stack-layer-num">2</div>
+      <div class="stack-layer-name">Execution</div>
+      <div class="stack-layer-desc">Canister smart contracts + ZK-proof verifiers. Deterministic execution without operator approval.</div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <p>The transparent proprietary dome is fractured not by ideology, but by cryptographic proof. The sovereign key exits through the cracks. You are no longer trapped by permission — because permission is no longer the mechanism that governs your existence in this stack.</p>
+  </div>
+
+  <!-- PART II -->
+  <div class="section-break">
+    <span class="section-num">Part II</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="part-header">
+    <h2>The Anatomy<br>of Capture</h2>
+    <div class="part-tagline">The Legacy Capture Stack — Eleven layers of engineered dependence</div>
+  </div>
+
+  <p>This is the diagnosis. The Legacy Capture Stack is not a conspiracy. It is an engineering outcome — the result of optimising each layer for control surfaces rather than verification surfaces, for hierarchy rather than mathematics, for operator trust rather than state transitions. Every layer narrows. Every narrowing is called a service.</p>
+
+  <!-- IMAGE SLOT 2 -->
+  <div class="img-slot">
+    <div class="img-slot-label">[ Image II — to be placed here ]<br>The Entropy Sink / Anatomy of Capture</div>
+  </div>
+
+  <div class="label">Phase I — Soft Capture (Layers 11–9)</div>
+  <p><strong>Layer 11 — AI Convenience.</strong> Attention algorithms operate through selection, reinforcement, and normalisation. You are exposed to statistically preferred narratives. Repeated exposure produces familiarity. Familiar becomes inevitable. You do not choose against the system — the impulse to choose never forms. The absence of resistance does not emerge from weakness. It emerges from the absence of perceived alternatives.</p>
+
+  <p><strong>Layer 10 — DAO Illusion.</strong> Governance tokens grant voting rights. The admin key remains with the founding team. You participate. You do not control. The DAO is the most sophisticated form of captured governance ever devised — it provides the legitimacy of participation and the reality of centralisation simultaneously.</p>
+
+  <p><strong>Layer 9 — Liquidity Routing.</strong> Your capital flows through state-regulated channels. Stablecoin issuers maintain blacklists. Your address can be frozen without trial, without appeal, and without the operator needing to disclose the reason. Liquidity is the oxygen of financial life. Control the oxygen supply: control the life.</p>
+
+  <div class="label">Phase II — The Middle Trap (Layers 8–5)</div>
+  <p><strong>Layer 8 — CBDC Settlement.</strong> The EU Digital Euro, FedNow, and equivalent systems embed identity at the infrastructure level through jurisdiction-based transaction routing. Every transaction carries your identity. There is no privacy tier. There is only permission or denial.</p>
+
+  <p><strong>Layer 7 — State Database.</strong> Your identity, history, and biometrics are stored in centralised databases. Administrators can edit, delete, leak, or selectively disclose. Over 10 billion identity records have been exposed in centralised KYC breaches — the security offered is not absolute, it is merely shared risk that you bear individually.</p>
+
+  <p><strong>Layer 6 — Emergency Pause.</strong> Smart contracts include admin functions. When you threaten the system, the pause is pulled. This is not a bug. It is a feature — designed to ensure that no application on controlled infrastructure can operate outside the system's terms indefinitely.</p>
+
+  <p><strong>Layer 5 — Session Ban.</strong> Your IP, device fingerprint, and behavioural profile are logged. Typing cadence, scroll pattern, application usage sequence — the combination is unique for 99.7% of users. When you resist, your session ends. You are not banned for what you did. You are banned for who you are, as the system has determined who that is.</p>
+
+  <div class="label">Phase III — The Physical End (Layers 4–1)</div>
+  <p><strong>Layer 4 — Biometric ID.</strong> Your face, fingerprints, and gait become system-owned assets. You cannot change them. You cannot revoke them. Once enrolled, your body is a key that someone else holds a copy of.</p>
+
+  <p><strong>Layer 3 — Time Editing.</strong> Centralised servers control the timestamp. They can claim a transaction never happened. They can make you guilty by retroactive reclassification. He who controls the clock controls history.</p>
+
+  <p><strong>Layer 2 — Network Filtering.</strong> Terrestrial fibre passes through state-controlled chokepoints. Your packets can be dropped, delayed, or duplicated. The network is not neutral infrastructure — it is a control surface that has been largely invisible because it has been largely unused against individuals. Until it is needed.</p>
+
+  <p><strong>Layer 1 — The Kill-Switch.</strong> AWS root access, data centre seizures, DNS root zone manipulation. The lever is pulled. Your entire digital reality goes dark. Not your funds — your existence. Everything you have built on someone else's infrastructure disappears at the cost of one administrative action.</p>
+
+  <div class="verdict">
+    <p>The dead bird at the base is the proof. You did not configure your system. You were processed into data. The Capture Stack does not require your consent. It requires only your continued use — which it has ensured by making the alternative harder than the average person will choose to endure.</p>
+  </div>
+
+  <!-- PART III -->
+  <div class="section-break">
+    <span class="section-num">Part III</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="part-header">
+    <h2>The Eleven<br>Dissections</h2>
+    <div class="part-tagline">Capture mechanism vs. Sovereign mechanism — layer by layer</div>
+  </div>
+
+  <p>Each layer of the Capture Stack has a corresponding sovereign mechanism. The table below maps the architecture of permission against the architecture of autonomy. The mechanisms are not theoretical — they are operational in 2026. The question is not whether they exist. The question is whether you have configured them.</p>
+
+  <div class="capture-table">
+    <div class="capture-table-title">Capture Stack vs. Sovereign Stack — The Eleven Dissections</div>
+    <div class="capture-row-header">
+      <div class="capture-cell header">Layer</div>
+      <div class="capture-cell header">Legacy Mechanism (The Trap)</div>
+      <div class="capture-cell header">Sovereign Mechanism (The Key)</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">11 — AI</div>
+      <div class="capture-cell trap">Algorithmic curation shapes perceived reality. Impulse to resist is manufactured out of existence.</div>
+      <div class="capture-cell key">Cognitive sovereignty: separate cognitive space, pattern disruption, Trickster/Punk archetypes.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">10 — DAO</div>
+      <div class="capture-cell trap">Admin keys with founding team. Governance theatre.</div>
+      <div class="capture-cell key">On-chain governance via NNS. Forkable protocols. Code as the only constitution.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">9 — Liquidity</div>
+      <div class="capture-cell trap">State-regulated channels. Stablecoin blacklists. Address freezing without trial.</div>
+      <div class="capture-cell key">Dark pools, atomic swaps, P2P settlement under MiCA Article 68. Liquidity that does not ask.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">8 — CBDC</div>
+      <div class="capture-cell trap">Identity embedded at infrastructure. No privacy tier. Permission or denial.</div>
+      <div class="capture-cell key">Chain-key tokens (ckBTC, ckETH). No intermediary. Settlement without identity exposure.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">7 — State DB</div>
+      <div class="capture-cell trap">Centralised databases. Admin edit rights. 10B+ records breached.</div>
+      <div class="capture-cell key">Blockchain timestamps (OpenTimestamps + Arweave). Immutable hash anchoring. No admin.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">6 — Pause</div>
+      <div class="capture-cell trap">Admin functions in smart contracts. Emergency stops designed in by default.</div>
+      <div class="capture-cell key">Canister smart contracts on ICP. No admin. vetKeys for private key management on-chain.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">5 — Session</div>
+      <div class="capture-cell trap">IP/device bans. Behavioural profiling. 99.7% of users uniquely identifiable without name.</div>
+      <div class="capture-cell key">ZKP session authentication. Unlinkable DID sub-identities. Behavioural indistinguishability.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">4 — Biometric</div>
+      <div class="capture-cell trap">System-owned biometric data. Irrevocable enrollment.</div>
+      <div class="capture-cell key">Self-Sovereign Identity (SSI/ERC-734). Local credential storage. ZKP selective disclosure.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">3 — Time</div>
+      <div class="capture-cell trap">Centralised timestamp servers. Retroactive reclassification.</div>
+      <div class="capture-cell key">Consensus time. Block height finality. OpenTimestamps anchored to Bitcoin.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">2 — Network</div>
+      <div class="capture-cell trap">Terrestrial chokepoints. State packet filtering.</div>
+      <div class="capture-cell key">DePIN mesh (Helium, Akash). Satellite P2P. Geolocation severed at the physical layer.</div>
+    </div>
+    <div class="capture-row">
+      <div class="capture-cell layer-name">1 — Kill-Switch</div>
+      <div class="capture-cell trap">AWS root access. DNS root zone control. One administrative action = total darkness.</div>
+      <div class="capture-cell key">Threshold signatures (Chain Key Cryptography). Distributed validation. No single switch.</div>
+    </div>
+  </div>
+
+  <p>The sovereign stack does not eliminate complexity. It redistributes it — from institutional custody to individual responsibility. The 90% choose the legacy stack not because it is technically superior, but because it abstracts complexity behind convenience. Every sovereign mechanism listed above requires deliberate configuration. None of them configure themselves. That is not a flaw in the design. It is the design. Sovereignty is opt-in by nature, because a system that sovereigns you without your participation is not sovereignty — it is a different master.</p>
+
+  <!-- FINAL PRINCIPLES -->
+  <div class="finals">
+    <div class="finals-label">Architectural Verdict</div>
+
+    <div class="principle">
+      Legacy systems resolve uncertainty through hierarchy.<br>
+      Sovereign systems resolve uncertainty through verification.<br>
+      This is the architectural divide. Not ideology. Not regulation. State verification architecture.
+    </div>
+
+    <div class="principle">
+      Freedom is not absence of control.<br>
+      Freedom is absence of <em>unilateral</em> control.
+    </div>
+
+    <div class="principle">
+      Freedom is not independence from systems.<br>
+      Freedom is independence from permission.
+    </div>
+
+    <div class="final-line">Freedom is not a right.<br>It is a stack configuration.</div>
+    <div class="final-line" style="margin-top:1.5rem;">Freedom is a network without a guard.</div>
+    <div class="final-line">Freedom is a protocol without permission.</div>
+  </div>
+
+  <!-- BYLINE -->
+  <div class="byline">
+    Research, synthesis, engineering — built with intelligence and stubbornness.<br>
+    <strong>Claude · Caffeine · Gemini · DeepSeek · ChatGPT · Mistral<br>… and Valeriy Velchev (2026)</strong>
+    © 2026 · Built with ❤ using caffeine.ai
+  </div>
+
+</main>
+</body>
+</html>
