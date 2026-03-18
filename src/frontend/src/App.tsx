@@ -1,6 +1,7 @@
 import { KeyConvergenceSection } from "@/components/KeyConvergenceSection";
 import { KeyPillarSection } from "@/components/KeyPillarSection";
 import { ManifestoView } from "@/components/ManifestoView";
+import { PhoneSpyView } from "@/components/PhoneSpyView";
 import { TrapConvergenceSection } from "@/components/TrapConvergenceSection";
 import { TrapNav } from "@/components/TrapNav";
 import { TrapPillarSection } from "@/components/TrapPillarSection";
@@ -9,7 +10,7 @@ import { KEY_PILLARS } from "@/data/key";
 import { TRAP_PILLARS } from "@/data/trap";
 import { useEffect, useRef, useState } from "react";
 
-type Essay = "trap" | "key" | "manifesto";
+type Essay = "trap" | "key" | "manifesto" | "phonespy";
 
 const TRAP_NAV_ITEMS = [
   { id: "pillar-i", label: "PILLAR I" },
@@ -38,6 +39,12 @@ const MANIFESTO_NAV_ITEMS = [
   { id: "manifesto-verdict", label: "VERDICT" },
 ];
 
+const PHONESPY_NAV_ITEMS = [
+  { id: "phonespy-pillar-i", label: "PILLAR I" },
+  { id: "phonespy-pillar-ii", label: "PILLAR II" },
+  { id: "phonespy-pillar-iii", label: "PILLAR III" },
+];
+
 export default function App() {
   const [essay, setEssay] = useState<Essay>("key");
   const [activeSection, setActiveSection] = useState("");
@@ -48,7 +55,9 @@ export default function App() {
       ? TRAP_NAV_ITEMS
       : essay === "key"
         ? KEY_NAV_ITEMS
-        : MANIFESTO_NAV_ITEMS;
+        : essay === "manifesto"
+          ? MANIFESTO_NAV_ITEMS
+          : PHONESPY_NAV_ITEMS;
 
   useEffect(() => {
     const items =
@@ -56,7 +65,9 @@ export default function App() {
         ? TRAP_NAV_ITEMS
         : essay === "key"
           ? KEY_NAV_ITEMS
-          : MANIFESTO_NAV_ITEMS;
+          : essay === "manifesto"
+            ? MANIFESTO_NAV_ITEMS
+            : PHONESPY_NAV_ITEMS;
     const ids = items.map((i) => i.id);
     setActiveSection(ids[0] ?? "");
     const timeout = setTimeout(() => {
@@ -95,30 +106,65 @@ export default function App() {
 
   const isKey = essay === "key";
   const isManifesto = essay === "manifesto";
-  const accentColor = isManifesto
-    ? "oklch(65% 0.13 85)"
-    : isKey
-      ? "oklch(60% 0.14 160)"
-      : "oklch(62% 0.15 240)";
+  const isPhoneSpy = essay === "phonespy";
+
+  const accentColor = isPhoneSpy
+    ? "oklch(62% 0.18 25)"
+    : isManifesto
+      ? "oklch(65% 0.13 85)"
+      : isKey
+        ? "oklch(60% 0.14 160)"
+        : "oklch(62% 0.15 240)";
+
   const currentYear = new Date().getFullYear();
 
-  const essayLabel = isManifesto
-    ? "THE SOVEREIGNTY MANIFESTO"
-    : isKey
-      ? "THE KEY"
-      : "THE TRAP";
+  const essayLabel = isPhoneSpy
+    ? "YOUR PHONE IS BETRAYING YOU"
+    : isManifesto
+      ? "THE SOVEREIGNTY MANIFESTO"
+      : isKey
+        ? "THE KEY"
+        : "THE TRAP";
 
-  const heroImage = isManifesto
-    ? "/assets/uploads/BeFree-2.png"
-    : isKey
-      ? "/assets/uploads/Key-1.png"
-      : "/assets/uploads/Trap-3.png";
+  const heroImage = isPhoneSpy
+    ? "/assets/uploads/PhoneSpy-1.png"
+    : isManifesto
+      ? "/assets/uploads/BeFree-2.png"
+      : isKey
+        ? "/assets/uploads/Key-1.png"
+        : "/assets/uploads/Trap-3.png";
 
-  const heroImageAlt = isManifesto
-    ? "The Sovereignty Manifesto"
-    : isKey
-      ? "The Key"
-      : "The Trap";
+  const heroImageAlt = isPhoneSpy
+    ? "Phone Spy"
+    : isManifesto
+      ? "The Sovereignty Manifesto"
+      : isKey
+        ? "The Key"
+        : "The Trap";
+
+  const heroBorderColor = isPhoneSpy
+    ? "oklch(30% 0.12 25 / 0.4)"
+    : isManifesto
+      ? "oklch(30% 0.1 85 / 0.4)"
+      : isKey
+        ? "oklch(30% 0.1 160 / 0.4)"
+        : "oklch(30% 0.08 240 / 0.4)";
+
+  const dividerColor = isPhoneSpy
+    ? "oklch(55% 0.18 25 / 0.4)"
+    : isManifesto
+      ? "oklch(55% 0.12 85 / 0.4)"
+      : isKey
+        ? "oklch(55% 0.14 160 / 0.4)"
+        : "oklch(55% 0.12 240 / 0.4)";
+
+  const footerAccent = isPhoneSpy
+    ? "oklch(45% 0.15 25)"
+    : isManifesto
+      ? "oklch(45% 0.1 85)"
+      : isKey
+        ? "oklch(45% 0.1 160)"
+        : "oklch(40% 0.07 240)";
 
   return (
     <div className="min-h-screen" style={{ background: "oklch(7% 0.004 240)" }}>
@@ -131,8 +177,11 @@ export default function App() {
       <main className="max-w-3xl mx-auto px-6 md:px-10 lg:px-14 xl:px-16">
         {/* Essay selector */}
         <div
-          className="fixed bottom-6 right-6 z-40 flex gap-2"
-          style={{ filter: "drop-shadow(0 4px 12px oklch(0% 0 0 / 0.5))" }}
+          className="fixed bottom-6 right-6 z-40 flex gap-2 flex-wrap justify-end"
+          style={{
+            filter: "drop-shadow(0 4px 12px oklch(0% 0 0 / 0.5))",
+            maxWidth: "calc(100vw - 3rem)",
+          }}
         >
           {(["trap", "key"] as Essay[]).map((e) => (
             <button
@@ -191,7 +240,34 @@ export default function App() {
             }}
             data-ocid="essay_selector.manifesto.toggle"
           >
-            SM · THE MANIFESTO
+            SM \u00b7 THE MANIFESTO
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEssay("phonespy");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="font-mono-code text-xs tracking-widest px-4 py-2 transition-all duration-200"
+            style={{
+              background:
+                essay === "phonespy"
+                  ? "oklch(14% 0.01 240)"
+                  : "oklch(9% 0.006 240)",
+              border: `1px solid ${
+                essay === "phonespy"
+                  ? "oklch(55% 0.18 25 / 0.6)"
+                  : "oklch(22% 0.006 240)"
+              }`,
+              color:
+                essay === "phonespy"
+                  ? "oklch(72% 0.18 25)"
+                  : "oklch(38% 0.007 240)",
+              borderRadius: "2px",
+            }}
+            data-ocid="essay_selector.phonespy.toggle"
+          >
+            PS \u00b7 PHONE SPY
           </button>
         </div>
 
@@ -205,11 +281,13 @@ export default function App() {
             style={{ color: "oklch(30% 0.06 240)" }}
           >
             <span>
-              {isManifesto
-                ? "SOVEREIGNTY SERIES"
-                : isKey
-                  ? "HEXALOGY VI"
-                  : "HEXALOGY V"}
+              {isPhoneSpy
+                ? "PHONESPY"
+                : isManifesto
+                  ? "SOVEREIGNTY SERIES"
+                  : isKey
+                    ? "HEXALOGY VI"
+                    : "HEXALOGY V"}
             </span>
             <span style={{ color: "oklch(22% 0.005 240)" }}>/</span>
             <span>
@@ -218,7 +296,32 @@ export default function App() {
             </span>
           </div>
 
-          {isManifesto ? (
+          {isPhoneSpy ? (
+            <>
+              <h1
+                className="font-serif-display font-bold leading-none mb-2"
+                style={{
+                  fontSize: "clamp(2.5rem, 9vw, 6rem)",
+                  color: "oklch(93% 0.012 85)",
+                  letterSpacing: "-0.03em",
+                  lineHeight: 0.92,
+                }}
+              >
+                YOUR PHONE IS
+              </h1>
+              <h1
+                className="font-serif-display font-bold leading-none mb-8"
+                style={{
+                  fontSize: "clamp(2.5rem, 9vw, 6rem)",
+                  color: accentColor,
+                  letterSpacing: "-0.03em",
+                  lineHeight: 0.92,
+                }}
+              >
+                BETRAYING YOU
+              </h1>
+            </>
+          ) : isManifesto ? (
             <>
               <h1
                 className="font-serif-display font-bold leading-none mb-2"
@@ -286,13 +389,7 @@ export default function App() {
             className="w-full mb-8 overflow-hidden"
             style={{
               borderRadius: "2px",
-              border: `1px solid ${
-                isManifesto
-                  ? "oklch(30% 0.1 85 / 0.4)"
-                  : isKey
-                    ? "oklch(30% 0.1 160 / 0.4)"
-                    : "oklch(30% 0.08 240 / 0.4)"
-              }`,
+              border: `1px solid ${heroBorderColor}`,
             }}
           >
             <img
@@ -311,21 +408,25 @@ export default function App() {
             className="font-serif-display text-lg md:text-xl font-light mb-2"
             style={{ color: "oklch(42% 0.01 270)", fontStyle: "italic" }}
           >
-            {isManifesto
-              ? "Engineering the Exit from the Legacy Capture Stack"
-              : isKey
-                ? "The Sixth Essay \u2014 On the Architecture of Resistance"
-                : "The Fifth Essay \u2014 On the Architecture of Invisible Capture"}
+            {isPhoneSpy
+              ? "Your software is their spy."
+              : isManifesto
+                ? "Engineering the Exit from the Legacy Capture Stack"
+                : isKey
+                  ? "The Sixth Essay \u2014 On the Architecture of Resistance"
+                  : "The Fifth Essay \u2014 On the Architecture of Invisible Capture"}
           </p>
 
           <div
             className="font-mono-code text-xs tracking-widest"
             style={{
-              color: isManifesto
-                ? "oklch(40% 0.1 85)"
-                : isKey
-                  ? "oklch(40% 0.1 160)"
-                  : "oklch(35% 0.07 240)",
+              color: isPhoneSpy
+                ? "oklch(40% 0.15 25)"
+                : isManifesto
+                  ? "oklch(40% 0.1 85)"
+                  : isKey
+                    ? "oklch(40% 0.1 160)"
+                    : "oklch(35% 0.07 240)",
             }}
           >
             Q4 2026
@@ -335,13 +436,7 @@ export default function App() {
             style={{
               width: "100%",
               height: "1px",
-              background: `linear-gradient(to right, ${
-                isManifesto
-                  ? "oklch(55% 0.12 85 / 0.4)"
-                  : isKey
-                    ? "oklch(55% 0.14 160 / 0.4)"
-                    : "oklch(55% 0.12 240 / 0.4)"
-              }, transparent)`,
+              background: `linear-gradient(to right, ${dividerColor}, transparent)`,
               marginTop: "2.5rem",
               marginBottom: "2.5rem",
             }}
@@ -351,26 +446,32 @@ export default function App() {
             className="font-serif-display text-xl md:text-2xl leading-snug"
             style={{ color: "oklch(70% 0.012 85)", fontStyle: "italic" }}
           >
-            {isManifesto
-              ? "Freedom is not absence of control. Freedom is absence of unilateral control."
-              : isKey
-                ? "Resistance is not a political act. It is an engineering decision."
-                : "The blockchain did not liberate finance. It became its nervous system."}
+            {isPhoneSpy
+              ? "Freedom is a configuration, not a right."
+              : isManifesto
+                ? "Freedom is not absence of control. Freedom is absence of unilateral control."
+                : isKey
+                  ? "Resistance is not a political act. It is an engineering decision."
+                  : "The blockchain did not liberate finance. It became its nervous system."}
           </p>
 
           <p
             className="mt-8 leading-relaxed"
             style={{ color: "oklch(50% 0.008 270)", fontSize: "1rem" }}
           >
-            {isManifesto
-              ? "A structured analysis of the eleven-layer Legacy Capture Stack and its sovereign architectural alternatives."
-              : isKey
-                ? "While the 90% live inside the system, the 10% build a parallel one \u2014 using its materials, against its logic."
-                : "Q4 2026 is the moment the distinction between crypto and traditional finance ceased to exist. The trap is not a prison. It is a service. And that is what makes it perfect."}
+            {isPhoneSpy
+              ? "The world of 2030 is organized, clean, and very convenient. But there is a catch: nothing belongs to you. Your money, your photos, your messages, and even your name are just entries in someone else's computer. If someone decides they don't like you \u2013 they simply delete you. And you cease to exist. This is not a movie. This is how technology is built today."
+              : isManifesto
+                ? "A structured analysis of the eleven-layer Legacy Capture Stack and its sovereign architectural alternatives."
+                : isKey
+                  ? "While the 90% live inside the system, the 10% build a parallel one \u2014 using its materials, against its logic."
+                  : "Q4 2026 is the moment the distinction between crypto and traditional finance ceased to exist. The trap is not a prison. It is a service. And that is what makes it perfect."}
           </p>
         </header>
 
-        {isManifesto ? (
+        {isPhoneSpy ? (
+          <PhoneSpyView />
+        ) : isManifesto ? (
           <ManifestoView />
         ) : isKey ? (
           <>
@@ -402,13 +503,7 @@ export default function App() {
                 href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  color: isManifesto
-                    ? "oklch(45% 0.1 85)"
-                    : isKey
-                      ? "oklch(45% 0.1 160)"
-                      : "oklch(40% 0.07 240)",
-                }}
+                style={{ color: footerAccent }}
               >
                 caffeine.ai
               </a>
@@ -417,11 +512,13 @@ export default function App() {
               className="font-mono-code text-xs"
               style={{ color: "oklch(22% 0.004 240)" }}
             >
-              {isManifesto
-                ? "THE SOVEREIGNTY MANIFESTO"
-                : isKey
-                  ? "HEXALOGY VI \u00b7 THE KEY"
-                  : "HEXALOGY V \u00b7 THE TRAP"}
+              {isPhoneSpy
+                ? "PHONESPY \u00b7 YOUR PHONE IS BETRAYING YOU"
+                : isManifesto
+                  ? "THE SOVEREIGNTY MANIFESTO"
+                  : isKey
+                    ? "HEXALOGY VI \u00b7 THE KEY"
+                    : "HEXALOGY V \u00b7 THE TRAP"}
             </div>
           </div>
         </footer>

@@ -28,10 +28,39 @@ export function TrapNav({ activeSection, navItems, essayLabel }: TrapNavProps) {
   };
 
   const isKey = essayLabel === "THE KEY";
-  const accentActive = isKey
-    ? "oklch(55% 0.14 160 / 0.5)"
-    : "oklch(55% 0.12 240 / 0.5)";
-  const colorActive = isKey ? "oklch(88% 0.015 85)" : "oklch(88% 0.015 85)";
+  const isPhoneSpy = essayLabel === "YOUR PHONE IS BETRAYING YOU";
+
+  const accentActive = isPhoneSpy
+    ? "oklch(55% 0.18 25 / 0.5)"
+    : isKey
+      ? "oklch(55% 0.14 160 / 0.5)"
+      : "oklch(55% 0.12 240 / 0.5)";
+
+  const colorActive = "oklch(88% 0.015 85)";
+
+  const navHexLabel = isPhoneSpy
+    ? "PHONESPY"
+    : isKey
+      ? "HEXALOGY VI"
+      : "HEXALOGY V";
+
+  const navHexColor = isPhoneSpy
+    ? "oklch(45% 0.15 25)"
+    : isKey
+      ? "oklch(45% 0.1 160)"
+      : "oklch(35% 0.06 240)";
+
+  const mobileAccentColor = isPhoneSpy
+    ? "oklch(62% 0.18 25)"
+    : isKey
+      ? "oklch(55% 0.14 160)"
+      : "oklch(55% 0.1 240)";
+
+  const mobileActiveColor = isPhoneSpy
+    ? "oklch(72% 0.18 25)"
+    : isKey
+      ? "oklch(72% 0.14 160)"
+      : "oklch(78% 0.15 240)";
 
   return (
     <nav
@@ -51,11 +80,9 @@ export function TrapNav({ activeSection, navItems, essayLabel }: TrapNavProps) {
       <div className="hidden md:flex items-center justify-between px-8 lg:px-16 py-4">
         <div
           className="font-mono-code text-xs tracking-widest"
-          style={{
-            color: isKey ? "oklch(45% 0.1 160)" : "oklch(35% 0.06 240)",
-          }}
+          style={{ color: navHexColor }}
         >
-          {isKey ? "HEXALOGY VI" : "HEXALOGY V"}
+          {navHexLabel}
         </div>
 
         <div className="flex items-center gap-1">
@@ -95,9 +122,7 @@ export function TrapNav({ activeSection, navItems, essayLabel }: TrapNavProps) {
       <div className="md:hidden flex items-center justify-between px-5 py-3">
         <div
           className="font-mono-code text-xs tracking-widest"
-          style={{
-            color: isKey ? "oklch(55% 0.14 160)" : "oklch(55% 0.1 240)",
-          }}
+          style={{ color: mobileAccentColor }}
         >
           {essayLabel}
         </div>
@@ -106,7 +131,7 @@ export function TrapNav({ activeSection, navItems, essayLabel }: TrapNavProps) {
           onClick={() => setMobileOpen((v) => !v)}
           className="font-mono-code text-xs tracking-widest px-3 py-1.5"
           style={{
-            color: isKey ? "oklch(55% 0.14 160)" : "oklch(55% 0.1 240)",
+            color: mobileAccentColor,
             border: "1px solid oklch(25% 0.008 240)",
             borderRadius: "2px",
           }}
@@ -135,11 +160,7 @@ export function TrapNav({ activeSection, navItems, essayLabel }: TrapNavProps) {
                 onClick={() => scrollTo(item.id)}
                 className="flex items-center w-full px-6 py-3 font-mono-code text-xs tracking-widest text-left"
                 style={{
-                  color: isActive
-                    ? isKey
-                      ? "oklch(72% 0.14 160)"
-                      : "oklch(78% 0.15 240)"
-                    : "oklch(45% 0.008 240)",
+                  color: isActive ? mobileActiveColor : "oklch(45% 0.008 240)",
                   borderBottom: "1px solid oklch(14% 0.005 240)",
                 }}
                 data-ocid={`nav.mobile.${item.id.replace(/-/g, "_")}.link`}
